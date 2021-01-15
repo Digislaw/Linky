@@ -1,4 +1,6 @@
-﻿using Linky.Entities.Identity;
+﻿using Linky.Entities.Configurations;
+using Linky.Entities.Identity;
+using Linky.Entities.Models;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.Data.Entity;
 
@@ -6,7 +8,7 @@ namespace Linky.Entities
 {
     public class AppDbContext : IdentityDbContext<ApplicationUser>
     {
-        // DbSets
+        public DbSet<Link> Links { get; set; }
 
         public AppDbContext() : base("AppConnection", throwIfV1Schema: false)
         {
@@ -17,7 +19,7 @@ namespace Linky.Entities
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             // Configurations
-            // modelBuilder.Configurations.Add(new xyz());
+            modelBuilder.Configurations.Add(new LinkConfiguration());
 
             base.OnModelCreating(modelBuilder);
         }
