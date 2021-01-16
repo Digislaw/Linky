@@ -15,6 +15,11 @@ namespace Linky.DataAccessLayer.Repositories.Concrete
             return await context.Links.FirstOrDefaultAsync(x => x.Id == id);
         }
 
+        public async Task<Link> GetLinkAsync(string label)
+        {
+            return await context.Links.FirstOrDefaultAsync(x => x.Label == label);
+        }
+
         public async Task<IEnumerable<Link>> GetLinksAsync()
         {
             return await context.Links.ToListAsync();

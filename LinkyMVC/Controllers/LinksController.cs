@@ -46,7 +46,15 @@ namespace LinkyMVC.Controllers
                 return View(model);
             }
 
-            var link = _mapper.Map<Link>(model);
+            var link = await _linkRepository.GetLinkAsync(model.Label);
+                
+            if(link != null)
+            {
+                ViewBag.ErrorMessage = "A link with the specified label already exists";
+                return View(model);
+            }
+
+            link = _mapper.Map<Link>(model);
             link.ApplicationUserId = User.Identity.GetUserId();
 
             var result = await _linkRepository.SaveLinkAsync(link);
@@ -97,7 +105,7 @@ namespace LinkyMVC.Controllers
                 return HttpNotFound();
             }
 
-            if(link.ApplicationUserId != User.Identity.GetUserId())
+            if (link.ApplicationUserId != User.Identity.GetUserId())
             {
                 return new HttpUnauthorizedResult();
             }
@@ -118,9 +126,17 @@ namespace LinkyMVC.Controllers
                 return View(model);
             }
 
-            var link = await _linkRepository.GetLinkAsync(model.Id);
+            var link = await _linkRepository.GetLinkAsync(model.Label);
 
-            if(link.ApplicationUserId != User.Identity.GetUserId())
+            if (link != null)
+            {
+                ViewBag.ErrorMessage = "A link with the specified label already exists";
+                return View(model);
+            }
+
+            link = await _linkRepository.GetLinkAsync(model.Id);
+
+            if (link.ApplicationUserId != User.Identity.GetUserId())
             {
                 return new HttpUnauthorizedResult();
             }
