@@ -137,8 +137,6 @@ namespace LinkyMVC.Controllers
             return RedirectToAction("Index");
         }
 
-        /*
-
         // GET: Links/Delete/5
         public async Task<ActionResult> Delete(int? id)
         {
@@ -146,11 +144,19 @@ namespace LinkyMVC.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Link link = await db.Links.FindAsync(id);
+
+            var link = await _linkRepository.GetLinkAsync(id.Value);
+
             if (link == null)
             {
                 return HttpNotFound();
             }
+
+            if (link.ApplicationUserId != User.Identity.GetUserId())
+            {
+                return new HttpUnauthorizedResult();
+            }
+
             return View(link);
         }
 
@@ -159,21 +165,26 @@ namespace LinkyMVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            Link link = await db.Links.FindAsync(id);
-            db.Links.Remove(link);
-            await db.SaveChangesAsync();
+            var link = await _linkRepository.GetLinkAsync(id);
+
+            if (link == null)
+            {
+                return HttpNotFound();
+            }
+
+            if (link.ApplicationUserId != User.Identity.GetUserId())
+            {
+                return new HttpUnauthorizedResult();
+            }
+
+            var result = await _linkRepository.DeleteLinkAsync(link);
+
+            if(!result)
+            {
+                return View("Error");
+            }
+
             return RedirectToAction("Index");
         }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
-        */
     }
 }
