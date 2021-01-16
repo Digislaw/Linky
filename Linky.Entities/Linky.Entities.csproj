@@ -64,6 +64,10 @@
     <Compile Include="Migrations\202101151936469_InitEntities.designer.cs">
       <DependentUpon>202101151936469_InitEntities.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202101161410324_ChangeLinkCreatedDate.cs" />
+    <Compile Include="Migrations\202101161410324_ChangeLinkCreatedDate.Designer.cs">
+      <DependentUpon>202101161410324_ChangeLinkCreatedDate.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Link.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -75,6 +79,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202101151936469_InitEntities.resx">
       <DependentUpon>202101151936469_InitEntities.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202101161410324_ChangeLinkCreatedDate.resx">
+      <DependentUpon>202101161410324_ChangeLinkCreatedDate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

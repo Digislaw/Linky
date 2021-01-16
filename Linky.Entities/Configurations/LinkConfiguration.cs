@@ -12,7 +12,7 @@ namespace Linky.Entities.Configurations
             Property(x => x.Label).IsRequired().HasMaxLength(50);
             Property(x => x.URL).IsRequired().HasMaxLength(256);
             Property(x => x.Clicks).IsRequired();
-            Property(x => x.CreatedAt).IsRequired().HasDatabaseGeneratedOption(DatabaseGeneratedOption.Computed);
+            Property(x => x.CreatedAt).IsRequired();
         }
     }
 }
