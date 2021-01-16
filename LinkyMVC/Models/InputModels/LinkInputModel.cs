@@ -7,15 +7,11 @@ namespace LinkyMVC.Models.InputModels
         /// <summary>
         /// Shortened link label
         /// </summary>
-        [Required]
-        [MaxLength(50)]
         public string Label { get; set; }
 
         /// <summary>
         /// URL to redirect
         /// </summary>
-        [Required]
-        [MaxLength(256)]
         public string URL { get; set; }
     }
 }
