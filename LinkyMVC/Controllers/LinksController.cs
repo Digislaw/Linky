@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Net;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 using AutoMapper;
 using Linky.DataAccessLayer.Repositories.Abstract;
@@ -8,28 +9,28 @@ using Microsoft.AspNet.Identity;
 
 namespace LinkyMVC.Controllers
 {
+    [Authorize]
     public class LinksController : Controller
     {
-        private readonly ILinkRepository _repository;
+        private readonly ILinkRepository _linkRepository;
         private readonly IMapper _mapper;
 
         public LinksController(ILinkRepository linkRepository, IMapper mapper)
         {
-            _repository = linkRepository;
+            _linkRepository = linkRepository;
             _mapper = mapper;
         }
 
         // GET: Links
         public async Task<ActionResult> Index()
         {
-            var links = await _repository.GetLinksAsync(User.Identity.GetUserId());
+            var links = await _linkRepository.GetLinksAsync(User.Identity.GetUserId());
             return View(links);
         }
 
         // GET: Links/Create
         public ActionResult Create()
         {
-            //ViewBag.ApplicationUserId = new SelectList(db.ApplicationUsers, "Id", "Email");
             return View();
         }
 
@@ -48,7 +49,7 @@ namespace LinkyMVC.Controllers
             var link = _mapper.Map<Link>(model);
             link.ApplicationUserId = User.Identity.GetUserId();
 
-            var result = await _repository.SaveLinkAsync(link);
+            var result = await _linkRepository.SaveLinkAsync(link);
 
             if(!result)
             {
@@ -56,13 +57,8 @@ namespace LinkyMVC.Controllers
             }
 
             return RedirectToAction("Index");
-
-
-            //ViewBag.ApplicationUserId = new SelectList(db.ApplicationUsers, "Id", "Email", link.ApplicationUserId);
-
         }
 
-        /*
         // GET: Links/Details/5
         public async Task<ActionResult> Details(int? id)
         {
@@ -70,11 +66,19 @@ namespace LinkyMVC.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Link link = await db.Links.FindAsync(id);
+
+            var link = await _linkRepository.GetLinkAsync(id.Value);
+
+            if (link.ApplicationUserId != User.Identity.GetUserId())
+            {
+                return new HttpUnauthorizedResult();
+            }
+
             if (link == null)
             {
                 return HttpNotFound();
             }
+
             return View(link);
         }
 
@@ -85,13 +89,21 @@ namespace LinkyMVC.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Link link = await db.Links.FindAsync(id);
+
+            var link = await _linkRepository.GetLinkAsync(id.Value);
+
             if (link == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.ApplicationUserId = new SelectList(db.ApplicationUsers, "Id", "Email", link.ApplicationUserId);
-            return View(link);
+
+            if(link.ApplicationUserId != User.Identity.GetUserId())
+            {
+                return new HttpUnauthorizedResult();
+            }
+
+            var model = _mapper.Map<LinkUpdateModel>(link);
+            return View(model);
         }
 
         // POST: Links/Edit/5
@@ -99,17 +111,33 @@ namespace LinkyMVC.Controllers
         // Aby uzyskać więcej szczegółów, zobacz https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Id,Label,URL,Clicks,CreatedAt,ApplicationUserId")] Link link)
+        public async Task<ActionResult> Edit([Bind(Include = "Id,Label,URL")] LinkUpdateModel model)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                db.Entry(link).State = EntityState.Modified;
-                await db.SaveChangesAsync();
-                return RedirectToAction("Index");
+                return View(model);
             }
-            ViewBag.ApplicationUserId = new SelectList(db.ApplicationUsers, "Id", "Email", link.ApplicationUserId);
-            return View(link);
+
+            var link = await _linkRepository.GetLinkAsync(model.Id);
+
+            if(link.ApplicationUserId != User.Identity.GetUserId())
+            {
+                return new HttpUnauthorizedResult();
+            }
+
+            _mapper.Map(model, link);
+
+            var result = await _linkRepository.SaveLinkAsync(link);
+
+            if (!result)
+            {
+                return View("Error");
+            }
+
+            return RedirectToAction("Index");
         }
+
+        /*
 
         // GET: Links/Delete/5
         public async Task<ActionResult> Delete(int? id)

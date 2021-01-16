@@ -33,21 +33,7 @@ namespace Linky.DataAccessLayer.Repositories.Concrete
             {
                 return false;
             }
-               
 
-            if (link.Id == default)
-            {
-                link.CreatedAt = DateTime.Now;
-                context.Entry(link).State = EntityState.Added;
-            }
-            else
-            {
-                context.Entry(link).State = EntityState.Modified;
-            }
-
-            await context.SaveChangesAsync();
-
-            /*
             try
             {
                 if(link.Id == default)
@@ -66,7 +52,6 @@ namespace Linky.DataAccessLayer.Repositories.Concrete
             {
                 return false;
             }
-            */
 
             return true;
         }
