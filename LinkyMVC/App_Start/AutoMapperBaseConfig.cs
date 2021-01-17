@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Linky.Entities.Models;
 using LinkyMVC.Models.InputModels;
+using LinkyMVC.Models.OutputModels;
 
 namespace LinkyMVC.App_Start
 {
@@ -27,6 +28,11 @@ namespace LinkyMVC.App_Start
                 .ForMember(x => x.Id, d => d.MapFrom(s => s.Id))
                 .ForMember(x => x.Label, d => d.MapFrom(s => s.Label))
                 .ForMember(x => x.URL, d => d.MapFrom(s => s.URL))
+                .ForAllOtherMembers(x => x.Ignore());
+
+            CreateMap<CountryCounter, CountryDataPoint>()
+                .ForMember(x => x.Label, d => d.MapFrom(s => s.CountryName))
+                .ForMember(x => x.Y, d => d.MapFrom(s => s.Clicks))
                 .ForAllOtherMembers(x => x.Ignore());
         }
     }

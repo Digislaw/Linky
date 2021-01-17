@@ -1,11 +1,14 @@
-﻿using System.Net;
+﻿using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using AutoMapper;
 using Linky.Entities.Models;
 using Linky.Services.Abstract;
 using LinkyMVC.Models.InputModels;
+using LinkyMVC.Models.OutputModels;
 using Microsoft.AspNet.Identity;
+using Newtonsoft.Json;
 
 namespace LinkyMVC.Controllers
 {
@@ -77,6 +80,9 @@ namespace LinkyMVC.Controllers
             {
                 return HttpNotFound();
             }
+
+            var countryData = _mapper.Map<IEnumerable<CountryDataPoint>>(link.CountryCounters);
+            ViewBag.CountryData = JsonConvert.SerializeObject(countryData);
 
             return View(link);
         }
