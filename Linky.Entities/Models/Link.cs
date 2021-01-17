@@ -1,5 +1,6 @@
 ﻿using Linky.Entities.Identity;
 using System;
+using System.Collections.Generic;
 
 namespace Linky.Entities.Models
 {
@@ -13,5 +14,7 @@ namespace Linky.Entities.Models
 
         public string ApplicationUserId { get; set; }
         public virtual ApplicationUser ApplicationUser { get; set; }
+
+        public virtual ICollection<CountryCounter> CountryCounters { get; set; }
     }
 }

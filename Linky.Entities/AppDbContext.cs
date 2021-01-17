@@ -9,6 +9,7 @@ namespace Linky.Entities
     public class AppDbContext : IdentityDbContext<ApplicationUser>
     {
         public DbSet<Link> Links { get; set; }
+        public DbSet<CountryCounter> CountryCounters { get; set; }
 
         public AppDbContext() : base("AppConnection", throwIfV1Schema: false)
         {
@@ -20,6 +21,7 @@ namespace Linky.Entities
         {
             // Configurations
             modelBuilder.Configurations.Add(new LinkConfiguration());
+            modelBuilder.Configurations.Add(new CountryCounterConfiguration());
 
             base.OnModelCreating(modelBuilder);
         }

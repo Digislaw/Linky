@@ -189,7 +189,7 @@ namespace LinkyMVC.Controllers
         [AllowAnonymous]
         public async Task<ActionResult> RedirectLink(string url)
         {
-            var response = await _linkService.HandleClickAsync(url);
+            var response = await _linkService.HandleClickAsync(url, HttpContext.Request.UserHostAddress);
 
             if (!response.Success)
             {

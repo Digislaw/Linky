@@ -16,6 +16,6 @@ namespace Linky.Services.Abstract
         Task<LinkServiceResponse> EditLinkAsync(Link link);
         Task<LinkServiceResponse> DeleteLinkAsync(Link link);
 
-        Task<LinkServiceRedirectResponse> HandleClickAsync(string label);
+        Task<LinkServiceRedirectResponse> HandleClickAsync(string label, string ipAddress);
     }
 }

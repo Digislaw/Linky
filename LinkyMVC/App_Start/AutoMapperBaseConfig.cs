@@ -14,7 +14,8 @@ namespace LinkyMVC.App_Start
                 .ForMember(x => x.Clicks, d => d.Ignore())
                 .ForMember(x => x.CreatedAt, d => d.Ignore())
                 .ForMember(x => x.ApplicationUser, d => d.Ignore())
-                .ForMember(x => x.ApplicationUserId, d => d.Ignore());
+                .ForMember(x => x.ApplicationUserId, d => d.Ignore())
+                .ForMember(x => x.CountryCounters, d => d.Ignore());
 
             CreateMap<Link, LinkUpdateModel>()
                 .ForMember(x => x.Id, d => d.MapFrom(s => s.Id))

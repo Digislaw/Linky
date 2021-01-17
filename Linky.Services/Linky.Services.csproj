@@ -41,7 +41,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Abstract\IGeolocationService.cs" />
     <Compile Include="Abstract\ILinkService.cs" />
+    <Compile Include="Concrete\GeolocationService.cs" />
     <Compile Include="Concrete\LinkService.cs" />
     <Compile Include="Models\LinkServiceRedirectResponse.cs" />
     <Compile Include="Models\LinkServiceResponse.cs" />
