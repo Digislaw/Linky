@@ -3,6 +3,8 @@ using Linky.DataAccessLayer.Repositories.Abstract;
 using Linky.DataAccessLayer.Repositories.Concrete;
 using Linky.Entities;
 using Linky.Entities.Identity;
+using Linky.Services.Abstract;
+using Linky.Services.Concrete;
 using LinkyMVC.App_Start;
 using LinkyMVC.Controllers;
 using Microsoft.AspNet.Identity;
@@ -74,6 +76,9 @@ namespace LinkyMVC
 
             // Repositories
             container.RegisterType<ILinkRepository, LinkRepository>();
+
+            // Services
+            container.RegisterType<ILinkService, LinkService>();
         }
     }
 }

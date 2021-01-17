@@ -4,6 +4,7 @@ using System.Web.Mvc;
 using AutoMapper;
 using Linky.DataAccessLayer.Repositories.Abstract;
 using Linky.Entities.Models;
+using Linky.Services.Abstract;
 using LinkyMVC.Models.InputModels;
 using Microsoft.AspNet.Identity;
 
@@ -12,19 +13,19 @@ namespace LinkyMVC.Controllers
     [Authorize]
     public class LinksController : Controller
     {
-        private readonly ILinkRepository _linkRepository;
+        private readonly ILinkService _linkService;
         private readonly IMapper _mapper;
 
-        public LinksController(ILinkRepository linkRepository, IMapper mapper)
+        public LinksController(ILinkService linkService, IMapper mapper)
         {
-            _linkRepository = linkRepository;
+            _linkService = linkService;
             _mapper = mapper;
         }
 
         // GET: Links
         public async Task<ActionResult> Index()
         {
-            var links = await _linkRepository.GetLinksAsync(User.Identity.GetUserId());
+            var links = await _linkService.GetUserLinksAsync(User.Identity.GetUserId());
             return View(links);
         }
 
@@ -41,27 +42,18 @@ namespace LinkyMVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create([Bind(Include = "Label,URL")] LinkInputModel model)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return View(model);
             }
 
-            var link = await _linkRepository.GetLinkAsync(model.Label);
-                
-            if(link != null)
+            var link = _mapper.Map<Link>(model);
+            var response = await _linkService.AddLinkAsync(link, User.Identity.GetUserId());
+
+            if (!response.Success)
             {
-                ViewBag.ErrorMessage = "A link with the specified label already exists";
+                ViewBag.ErrorMessage = response.ErrorMessage;
                 return View(model);
-            }
-
-            link = _mapper.Map<Link>(model);
-            link.ApplicationUserId = User.Identity.GetUserId();
-
-            var result = await _linkRepository.SaveLinkAsync(link);
-
-            if(!result)
-            {
-                return View("Error");
             }
 
             return RedirectToAction("Index");
@@ -75,7 +67,7 @@ namespace LinkyMVC.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            var link = await _linkRepository.GetLinkAsync(id.Value);
+            var link = await _linkService.FindByIdAsync(id.Value);
 
             if (link.ApplicationUserId != User.Identity.GetUserId())
             {
@@ -98,7 +90,7 @@ namespace LinkyMVC.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            var link = await _linkRepository.GetLinkAsync(id.Value);
+            var link = await _linkService.FindByIdAsync(id.Value);
 
             if (link == null)
             {
@@ -126,28 +118,19 @@ namespace LinkyMVC.Controllers
                 return View(model);
             }
 
-            var link = await _linkRepository.GetLinkAsync(model.Label);
-
-            if (link != null)
-            {
-                ViewBag.ErrorMessage = "A link with the specified label already exists";
-                return View(model);
-            }
-
-            link = await _linkRepository.GetLinkAsync(model.Id);
-
+            var link = await _linkService.FindByIdAsync(model.Id);
             if (link.ApplicationUserId != User.Identity.GetUserId())
             {
                 return new HttpUnauthorizedResult();
             }
 
             _mapper.Map(model, link);
+            var response = await _linkService.EditLinkAsync(link);
 
-            var result = await _linkRepository.SaveLinkAsync(link);
-
-            if (!result)
+            if (!response.Success)
             {
-                return View("Error");
+                ViewBag.ErrorMessage = response.ErrorMessage;
+                return View(model);
             }
 
             return RedirectToAction("Index");
@@ -161,7 +144,7 @@ namespace LinkyMVC.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            var link = await _linkRepository.GetLinkAsync(id.Value);
+            var link = await _linkService.FindByIdAsync(id.Value);
 
             if (link == null)
             {
@@ -181,7 +164,7 @@ namespace LinkyMVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            var link = await _linkRepository.GetLinkAsync(id);
+            var link = await _linkService.FindByIdAsync(id);
 
             if (link == null)
             {
@@ -193,14 +176,27 @@ namespace LinkyMVC.Controllers
                 return new HttpUnauthorizedResult();
             }
 
-            var result = await _linkRepository.DeleteLinkAsync(link);
+            var response = await _linkService.DeleteLinkAsync(link);
 
-            if(!result)
+            if (!response.Success)
             {
                 return View("Error");
             }
 
             return RedirectToAction("Index");
+        }
+
+        [AllowAnonymous]
+        public async Task<ActionResult> RedirectLink(string url)
+        {
+            var response = await _linkService.HandleClickAsync(url);
+
+            if (!response.Success)
+            {
+                return View("Error");
+            }
+
+            return Redirect(response.URL);
         }
     }
 }

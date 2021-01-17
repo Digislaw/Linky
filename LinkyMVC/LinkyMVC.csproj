@@ -309,6 +309,10 @@
       <Project>{903f7e87-e824-429d-ae53-6e6239eeb9ca}</Project>
       <Name>Linky.Entities</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Linky.Services\Linky.Services.csproj">
+      <Project>{48de0da8-129c-43cf-8c8e-f7ad4c442bfa}</Project>
+      <Name>Linky.Services</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
