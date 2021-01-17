@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using AutoMapper;
-using Linky.DataAccessLayer.Repositories.Abstract;
 using Linky.Entities.Models;
 using Linky.Services.Abstract;
 using LinkyMVC.Models.InputModels;
@@ -180,6 +179,7 @@ namespace LinkyMVC.Controllers
 
             if (!response.Success)
             {
+                ViewBag.ErrorMessage = response.ErrorMessage;
                 return View("Error");
             }
 
@@ -193,6 +193,7 @@ namespace LinkyMVC.Controllers
 
             if (!response.Success)
             {
+                ViewBag.ErrorMessage = response.ErrorMessage;
                 return View("Error");
             }
 
