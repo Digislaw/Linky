@@ -57,8 +57,11 @@
     @Html.ActionLink("Back to List", "Index")
 </p>
 
-<div id="countryChart" style="height: 370px; width: 100%;"></div>
-<div id="dailyChart" style="height: 370px; width: 100%;"></div>
+@if (Model.Clicks > 0)
+{
+    <div id="countryChart" style="height: 370px; width: 100%;"></div>
+    <div id="dailyChart" style="height: 370px; width: 100%;"></div>
+}
 
 @section scripts
 {
@@ -107,5 +110,5 @@
         });
         dailyChart.render();
     }
-    </script>   
+    </script>
 }

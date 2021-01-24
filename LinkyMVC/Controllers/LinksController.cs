@@ -81,11 +81,14 @@ namespace LinkyMVC.Controllers
                 return HttpNotFound();
             }
 
-            var countryData = _mapper.Map<IEnumerable<CountryDataPoint>>(link.CountryCounters);
-            ViewBag.CountryData = JsonConvert.SerializeObject(countryData);
+            if(link.Clicks > 0)
+            {
+                var countryData = _mapper.Map<IEnumerable<CountryDataPoint>>(link.CountryCounters);
+                ViewBag.CountryData = JsonConvert.SerializeObject(countryData);
 
-            var dailyData = _mapper.Map<IEnumerable<DailyDataPoint>>(_linkService.GetDailyStatistics(link, 7));
-            ViewBag.DailyData = JsonConvert.SerializeObject(dailyData);
+                var dailyData = _mapper.Map<IEnumerable<DailyDataPoint>>(_linkService.GetDailyStatistics(link, 7));
+                ViewBag.DailyData = JsonConvert.SerializeObject(dailyData);
+            }
 
             return View(link);
         }
