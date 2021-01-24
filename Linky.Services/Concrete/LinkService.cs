@@ -2,7 +2,9 @@
 using Linky.Entities.Models;
 using Linky.Services.Abstract;
 using Linky.Services.Models;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Linky.Services.Concrete
@@ -10,15 +12,11 @@ namespace Linky.Services.Concrete
     public class LinkService : ILinkService
     {
         private readonly ILinkRepository _linkRepository;
-        private readonly ICountryCounterRepository _countryCounterRepository;
         private readonly IGeolocationService _geolocationService;
 
-        public LinkService(ILinkRepository linkRepository, 
-            ICountryCounterRepository countryCounterRepository, 
-            IGeolocationService geolocationService)
+        public LinkService(ILinkRepository linkRepository, IGeolocationService geolocationService)
         {
             _linkRepository = linkRepository;
-            _countryCounterRepository = countryCounterRepository;
             _geolocationService = geolocationService;
         }
 
@@ -111,9 +109,21 @@ namespace Linky.Services.Concrete
                 return response;
             }
 
-            var result = await UpdateClickStatistics(link, ipAddress);
+            UpdateClickStatistics(link);
 
-            if (!result)
+            //var countryStatsResult = await UpdateCountryStatisticsAsync(link, ipAddress);
+
+            //if (!countryStatsResult)
+            //{
+            //    response.ErrorMessage = "Server error while saving changes to the database";
+            //    return response;
+            //}
+
+            await UpdateCountryStatisticsAsync(link, ipAddress);
+
+            var success = await _linkRepository.SaveLinkAsync(link);
+            
+            if (!success)
             {
                 response.ErrorMessage = "Server error while saving changes to the database";
                 return response;
@@ -124,24 +134,20 @@ namespace Linky.Services.Concrete
             return response;
         }
 
-        private async Task<bool> UpdateClickStatistics(Link link, string ipAddress)
+        private void UpdateClickStatistics(Link link)
         {
             link.Clicks++;
+        }
 
-            var linkSaveResult = await _linkRepository.SaveLinkAsync(link);
-
-            if (!linkSaveResult)
-            {
-                return false;
-            }
-
+        private async Task<bool> UpdateCountryStatisticsAsync(Link link, string ipAddress)
+        {
             string countryName;
 
             try
             {
                 countryName = await _geolocationService.GetCountryName(ipAddress);
             }
-            catch (System.Exception)
+            catch (Exception)
             {
                 return false;
             }
@@ -151,7 +157,7 @@ namespace Linky.Services.Concrete
                 return false;
             }
 
-            var countryCounter = await _countryCounterRepository.GetCountryCounterAsync(countryName);
+            var countryCounter = link.CountryCounters.FirstOrDefault(x => x.CountryName == countryName);
 
             if (countryCounter == null)
             {
@@ -161,10 +167,12 @@ namespace Linky.Services.Concrete
                     LinkId = link.Id,
                     Clicks = 0
                 };
+
+                link.CountryCounters.Add(countryCounter);
             }
 
             countryCounter.Clicks++;
-            return await _countryCounterRepository.SaveCountryCounterAsync(countryCounter);
+            return true;
         }
     }
 }

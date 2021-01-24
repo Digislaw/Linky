@@ -18,7 +18,8 @@ namespace LinkyMVC.Controllers
         private readonly ILinkService _linkService;
         private readonly IMapper _mapper;
 
-        public LinksController(ILinkService linkService, IMapper mapper)
+        public LinksController(ILinkService linkService,
+                                IMapper mapper)
         {
             _linkService = linkService;
             _mapper = mapper;

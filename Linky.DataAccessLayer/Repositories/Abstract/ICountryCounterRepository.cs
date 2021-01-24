@@ -7,7 +7,6 @@ namespace Linky.DataAccessLayer.Repositories.Abstract
     public interface ICountryCounterRepository
     {
         Task<CountryCounter> GetCountryCounterAsync(int id);
-        Task<CountryCounter> GetCountryCounterAsync(string countryName);
 
         Task<IEnumerable<CountryCounter>> GetCountryCountersAsync();
 

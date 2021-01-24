@@ -41,7 +41,7 @@ namespace Linky.DataAccessLayer.Repositories.Concrete
 
             try
             {
-                if(link.Id == default)
+                if (link.Id == default)
                 {
                     link.CreatedAt = DateTime.Now;
                     context.Entry(link).State = EntityState.Added;

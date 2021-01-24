@@ -13,11 +13,6 @@ namespace Linky.DataAccessLayer.Repositories.Concrete
         {
             return await context.CountryCounters.FirstOrDefaultAsync(x => x.Id == id);
         }
-        public async Task<CountryCounter> GetCountryCounterAsync(string countryName)
-        {
-            return await context.CountryCounters
-                .FirstOrDefaultAsync(x => x.CountryName == countryName);
-        }
 
         public async Task<IEnumerable<CountryCounter>> GetCountryCountersAsync()
         {
