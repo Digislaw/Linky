@@ -6,56 +6,62 @@
 
 <h2>Details</h2>
 
-<div>
-    <h4>Link</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.ApplicationUser.Email)
-        </dt>
+<div class="row">
+    <div class="col-md-8">
+        <div>
+            <h4>Link</h4>
+            <hr />
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.ApplicationUser.Email)
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.ApplicationUser.Email)
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.ApplicationUser.Email)
+                </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Label)
-        </dt>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Label)
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Label)
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.Label)
+                </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.URL)
-        </dt>
+                <dt>
+                    @Html.DisplayNameFor(model => model.URL)
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.URL)
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.URL)
+                </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Clicks)
-        </dt>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Clicks)
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Clicks)
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.Clicks)
+                </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.CreatedAt)
-        </dt>
+                <dt>
+                    @Html.DisplayNameFor(model => model.CreatedAt)
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.CreatedAt)
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.CreatedAt)
+                </dd>
 
-    </dl>
+            </dl>
+        </div>
+        <p>
+            @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+            @Html.ActionLink("Back to List", "Index")
+        </p>
+    </div>
+
+    <div id="qrCode" class="col-md-4"></div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
 
 @if (Model.Clicks > 0)
 {
@@ -65,6 +71,10 @@
 
 @section scripts
 {
+    @Scripts.Render("~/bundles/qrcode")
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
+    <!-- Statistics -->
     <script>
     window.onload = function () {
 
@@ -110,5 +120,10 @@
         });
         dailyChart.render();
     }
+    </script>
+
+    <!-- QR -->
+    <script>
+        new QRCode("qrCode", "@Model.URL");
     </script>
 }
