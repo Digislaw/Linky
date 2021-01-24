@@ -216,6 +216,7 @@
     <Compile Include="Models\InputModels\LinkUpdateModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\OutputModels\CountryDataPoint.cs" />
+    <Compile Include="Models\OutputModels\DailyDataPoint.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Validation\CustomRules.cs" />

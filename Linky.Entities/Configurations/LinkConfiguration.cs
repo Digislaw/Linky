@@ -14,7 +14,13 @@ namespace Linky.Entities.Configurations
             Property(x => x.Clicks).IsRequired();
             Property(x => x.CreatedAt).IsRequired();
 
+            // 1 Link -> Many country counters
             HasMany(x => x.CountryCounters)
+                .WithRequired(c => c.Link)
+                .HasForeignKey(c => c.LinkId);
+
+            // 1 Link -> Many daily counters
+            HasMany(x => x.DailyCounters)
                 .WithRequired(c => c.Link)
                 .HasForeignKey(c => c.LinkId);
         }

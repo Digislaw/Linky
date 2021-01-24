@@ -10,6 +10,7 @@ namespace Linky.Entities
     {
         public DbSet<Link> Links { get; set; }
         public DbSet<CountryCounter> CountryCounters { get; set; }
+        public DbSet<DailyCounter> DailyCounters { get; set; }
 
         public AppDbContext() : base("AppConnection", throwIfV1Schema: false)
         {

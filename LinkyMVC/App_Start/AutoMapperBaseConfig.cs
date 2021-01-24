@@ -2,6 +2,7 @@
 using Linky.Entities.Models;
 using LinkyMVC.Models.InputModels;
 using LinkyMVC.Models.OutputModels;
+using System;
 
 namespace LinkyMVC.App_Start
 {
@@ -9,14 +10,14 @@ namespace LinkyMVC.App_Start
     {
         public AutoMapperBaseConfig()
         {
-            
             CreateMap<LinkInputModel, Link>()
                 .ForMember(x => x.Id, d => d.Ignore())
                 .ForMember(x => x.Clicks, d => d.Ignore())
                 .ForMember(x => x.CreatedAt, d => d.Ignore())
                 .ForMember(x => x.ApplicationUser, d => d.Ignore())
                 .ForMember(x => x.ApplicationUserId, d => d.Ignore())
-                .ForMember(x => x.CountryCounters, d => d.Ignore());
+                .ForMember(x => x.CountryCounters, d => d.Ignore())
+                .ForMember(x => x.DailyCounters, d => d.Ignore());
 
             CreateMap<Link, LinkUpdateModel>()
                 .ForMember(x => x.Id, d => d.MapFrom(s => s.Id))
@@ -32,6 +33,11 @@ namespace LinkyMVC.App_Start
 
             CreateMap<CountryCounter, CountryDataPoint>()
                 .ForMember(x => x.Label, d => d.MapFrom(s => s.CountryName))
+                .ForMember(x => x.Y, d => d.MapFrom(s => s.Clicks))
+                .ForAllOtherMembers(x => x.Ignore());
+
+            CreateMap<DailyCounter, DailyDataPoint>()
+                .ForMember(x => x.X, d => d.MapFrom(s => ((DateTimeOffset)s.Day).ToUnixTimeMilliseconds()))
                 .ForMember(x => x.Y, d => d.MapFrom(s => s.Clicks))
                 .ForAllOtherMembers(x => x.Ignore());
         }

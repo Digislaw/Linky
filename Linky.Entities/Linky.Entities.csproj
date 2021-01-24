@@ -59,6 +59,7 @@
     <Compile Include="AppDbContext.cs" />
     <Compile Include="Configurations\ApplicationUserConfiguration.cs" />
     <Compile Include="Configurations\CountryCounterConfiguration.cs" />
+    <Compile Include="Configurations\DailyCounterConfiguration.cs" />
     <Compile Include="Configurations\LinkConfiguration.cs" />
     <Compile Include="Identity\ApplicationUser.cs" />
     <Compile Include="Migrations\202101151936469_InitEntities.cs" />
@@ -73,8 +74,13 @@
     <Compile Include="Migrations\202101171229000_AddCountryCounters.Designer.cs">
       <DependentUpon>202101171229000_AddCountryCounters.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202101241249231_AddDailyCounters.cs" />
+    <Compile Include="Migrations\202101241249231_AddDailyCounters.Designer.cs">
+      <DependentUpon>202101241249231_AddDailyCounters.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CountryCounter.cs" />
+    <Compile Include="Models\DailyCounter.cs" />
     <Compile Include="Models\Link.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -91,6 +97,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202101171229000_AddCountryCounters.resx">
       <DependentUpon>202101171229000_AddCountryCounters.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202101241249231_AddDailyCounters.resx">
+      <DependentUpon>202101241249231_AddDailyCounters.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -35,6 +35,24 @@ namespace Linky.Services.Concrete
             return await _linkRepository.GetLinksAsync(userId);
         }
 
+        public IEnumerable<DailyCounter> GetDailyStatistics(Link link, int days)
+        {
+            var today = DateTime.Now.Date;
+            var past = today.AddDays(-days);
+
+            var dailyCounters = link.DailyCounters.Where(x => x.Day.Date >= past && x.Day.Date <= today).ToList();
+
+            // Make the daily range consistent
+            //var range = new List<DailyCounter>()
+            //{
+            //    new DailyCounter() { Day = today },
+            //    new DailyCounter() { Day = past }
+            //};
+
+            //dailyCounters.AddRange(range.Where(r => !dailyCounters.Any(c => c.Day.Date == r.Day.Date)));
+            return dailyCounters;
+        }
+
         public async Task<LinkServiceResponse> AddLinkAsync(Link link, string userId)
         {
             var response = new LinkServiceResponse();
@@ -110,16 +128,8 @@ namespace Linky.Services.Concrete
             }
 
             UpdateClickStatistics(link);
-
-            //var countryStatsResult = await UpdateCountryStatisticsAsync(link, ipAddress);
-
-            //if (!countryStatsResult)
-            //{
-            //    response.ErrorMessage = "Server error while saving changes to the database";
-            //    return response;
-            //}
-
             await UpdateCountryStatisticsAsync(link, ipAddress);
+            UpdateDailyStatistics(link);
 
             var success = await _linkRepository.SaveLinkAsync(link);
             
@@ -173,6 +183,26 @@ namespace Linky.Services.Concrete
 
             countryCounter.Clicks++;
             return true;
+        }
+
+        private void UpdateDailyStatistics(Link link)
+        {
+            var today = DateTime.Now.Date;
+            var dailyCounter = link.DailyCounters.FirstOrDefault(x => x.Day.Date == today);
+
+            if (dailyCounter == null)
+            {
+                dailyCounter = new DailyCounter
+                {
+                    LinkId = link.Id,
+                    Clicks = 0,
+                    Day = today
+                };
+
+                link.DailyCounters.Add(dailyCounter);
+            }
+
+            dailyCounter.Clicks++;
         }
     }
 }

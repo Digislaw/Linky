@@ -16,5 +16,6 @@ namespace Linky.Entities.Models
         public virtual ApplicationUser ApplicationUser { get; set; }
 
         public virtual ICollection<CountryCounter> CountryCounters { get; set; }
+        public virtual ICollection<DailyCounter> DailyCounters { get; set; }
     }
 }

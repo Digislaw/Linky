@@ -58,6 +58,7 @@
 </p>
 
 <div id="countryChart" style="height: 370px; width: 100%;"></div>
+<div id="dailyChart" style="height: 370px; width: 100%;"></div>
 
 @section scripts
 {
@@ -82,6 +83,29 @@
 	        }]
         });
         countryChart.render();
+
+        var dailyChart = new CanvasJS.Chart("dailyChart", {
+            theme: "light2",
+	        animationEnabled: true,
+	        title: {
+		        text: "Number of clicks by day"
+	        },
+	        axisX: {
+                valueFormatString: "DD MMM",
+                interval: 1,
+                intervalType: "day"
+	        },
+	        axisY: {
+                interval: 1
+	        },
+	        data: [{
+		        type: "column",
+		        xValueType: "dateTime",
+		        xValueFormatString: "DD MMM",
+		        dataPoints: @Html.Raw(ViewBag.DailyData)
+	        }]
+        });
+        dailyChart.render();
     }
     </script>   
 }

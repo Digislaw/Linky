@@ -11,6 +11,7 @@ namespace Linky.Services.Abstract
         Task<Link> FindByLabelAsync(string label);
 
         Task<IEnumerable<Link>> GetUserLinksAsync(string userId);
+        IEnumerable<DailyCounter> GetDailyStatistics(Link link, int days);
 
         Task<LinkServiceResponse> AddLinkAsync(Link link, string userId);
         Task<LinkServiceResponse> EditLinkAsync(Link link);
