@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Mvc;
@@ -20,8 +18,7 @@ namespace LinkyMVC.Controllers
         private readonly ILinkService _linkService;
         private readonly IMapper _mapper;
 
-        public LinksController(ILinkService linkService,
-                                IMapper mapper)
+        public LinksController(ILinkService linkService, IMapper mapper)
         {
             _linkService = linkService;
             _mapper = mapper;
@@ -86,18 +83,6 @@ namespace LinkyMVC.Controllers
 
             var countryData = _mapper.Map<IEnumerable<CountryDataPoint>>(link.CountryCounters);
             ViewBag.CountryData = JsonConvert.SerializeObject(countryData);
-
-            //var today = DateTime.Now.Date;
-            //var past = today.AddDays(-7);
-
-            //var dailyCounters = link.DailyCounters.Where(x => x.Day.Date >= past && x.Day.Date <= today).ToList();
-            //var range = new List<DailyCounter>()
-            //{
-            //    new DailyCounter() { Day = today },
-            //    new DailyCounter() { Day = past }
-            //};
-
-            //dailyCounters.AddRange(range.Where(r => !dailyCounters.Any(c => c.Day.Date == r.Day.Date)));
 
             var dailyData = _mapper.Map<IEnumerable<DailyDataPoint>>(_linkService.GetDailyStatistics(link, 7));
             ViewBag.DailyData = JsonConvert.SerializeObject(dailyData);

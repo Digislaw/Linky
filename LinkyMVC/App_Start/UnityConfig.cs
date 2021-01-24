@@ -76,7 +76,6 @@ namespace LinkyMVC
 
             // Repositories
             container.RegisterType<ILinkRepository, LinkRepository>();
-            container.RegisterType<ICountryCounterRepository, CountryCounterRepository>();
 
             // Services
             container.RegisterType<ILinkService, LinkService>();

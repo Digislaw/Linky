@@ -40,17 +40,7 @@ namespace Linky.Services.Concrete
             var today = DateTime.Now.Date;
             var past = today.AddDays(-days);
 
-            var dailyCounters = link.DailyCounters.Where(x => x.Day.Date >= past && x.Day.Date <= today).ToList();
-
-            // Make the daily range consistent
-            //var range = new List<DailyCounter>()
-            //{
-            //    new DailyCounter() { Day = today },
-            //    new DailyCounter() { Day = past }
-            //};
-
-            //dailyCounters.AddRange(range.Where(r => !dailyCounters.Any(c => c.Day.Date == r.Day.Date)));
-            return dailyCounters;
+            return link.DailyCounters.Where(x => x.Day.Date >= past && x.Day.Date <= today).ToList();
         }
 
         public async Task<LinkServiceResponse> AddLinkAsync(Link link, string userId)
