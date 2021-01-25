@@ -3,49 +3,53 @@
 @{
     ViewBag.Title = "Index";
 }
+<div class="container body-content">
+    <h2 class="linkycolor">Your links</h2>
 
-<h2>Index</h2>
+    <a href="@Url.Action("Create")" class="btn btn-default linkybtn" >Create new</a>
+    <table class="table linkycolor">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Label)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.URL)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Clicks)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CreatedAt)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Label)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.URL)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Clicks)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatedAt)
+                </td>
+                <td>
+                    <div class="btn-group" role="group" aria-label="...">
+                        <a href="@Url.Action("Details", new { id = item.Id })" class="btn btn-success">Details</a>
+                        <a href="@Url.Action("Edit", new { id = item.Id })" class="btn btn-warning">Edit</a>
+                        <a href="@Url.Action("Delete", new { id = item.Id })" class="btn btn-danger">Delete</a>
+                    </div>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Label)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.URL)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Clicks)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CreatedAt)
-        </th>
-        <th></th>
-    </tr>
+                </td>
+            </tr>
+        }
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Label)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.URL)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Clicks)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CreatedAt)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
-
-</table>
+    </table>
+    <div />
