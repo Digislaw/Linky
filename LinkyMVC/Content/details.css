@@ -1,0 +1,14 @@
+#qrCode img {
+    display: block;
+    margin-right: auto;
+    margin-left: auto;
+    max-width: 23rem;
+}
+
+.panel dl {
+    font-size: 16px;
+}
+
+.chart {
+    height: 360px;
+}
