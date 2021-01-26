@@ -23,7 +23,8 @@ namespace Linky.Services.Concrete
                 ipAddress = "194.181.92.98";
             }
 
-            return await _client.GetStringAsync(URL + ipAddress + "?fields=country");
+            var country = await _client.GetStringAsync(URL + ipAddress + "?fields=country");
+            return country.Trim();
         }
     }
 }
