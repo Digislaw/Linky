@@ -3,6 +3,7 @@
 @{
     ViewBag.Title = "Details";
 }
+
 <div class="container body-content">
     <div class="row" style="margin-top: 2rem;">
         <div class="panel panel-primary col-md-8 col-md-offset-2 linkycolor" style=" border-color: #681879">
@@ -13,46 +14,55 @@
                         <a href="@Url.Action("Index")" class="btn btn-danger">Back to list</a>
                         <a href="@Url.Action("Edit", new { id = Model.Id })" class="btn btn-warning">Edit</a>
                     </div>
-                        <hr />
-                        <dl class="dl-horizontal">
-                            <dt>
-                                Label:
-                            </dt>
+                    <hr />
+                    <dl class="dl-horizontal">
+                        <dt>
+                            Label:
+                        </dt>
 
-                            <dd>
-                                @Html.DisplayFor(model => model.Label)
-                            </dd>
+                        <dd>
+                            @Html.DisplayFor(model => model.Label)
+                        </dd>
 
-                            <dt>
-                                Destination:
-                            </dt>
+                        <dt>
+                            Clicks:
+                        </dt>
 
-                            <dd>
-                                <a id="destination" href="@Model.URL">@Html.DisplayFor(model => model.URL)</a>
-                            </dd>
+                        <dd>
+                            @Html.DisplayFor(model => model.Clicks)
+                        </dd>
 
-                            <dt>
-                                Clicks:
-                            </dt>
+                        <dt>
+                            Link:
+                        </dt>
 
-                            <dd>
-                                @Html.DisplayFor(model => model.Clicks)
-                            </dd>
+                        <dd>
+                            <a href="/@Model.Label">@Url.Action("Index", "Home", null, "https")@Model.Label</a>
+                        </dd>
 
-                            <dt>
-                                Created at:
-                            </dt>
+                        <dt>
+                            Destination:
+                        </dt>
 
-                            <dd>
-                                @Html.DisplayFor(model => model.CreatedAt)
-                            </dd>
+                        <dd>
+                            <a id="destination" href="@Model.URL">@Html.DisplayFor(model => model.URL)</a>
+                        </dd>
 
-                        </dl>
-                    </div>
+                        <dt>
+                            Created at:
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.CreatedAt)
+                        </dd>
+
+                    </dl>
+                </div>
                 <div id="qrCode" class="col-sm-6"></div>
             </div>
         </div>
     </div>
+
     @if (Model.Clicks > 0)
     {
         <div class="panel panel-primary linkycolor" style=" border-color: #681879">
