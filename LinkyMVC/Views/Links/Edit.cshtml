@@ -4,7 +4,7 @@
     ViewBag.Title = "Edit";
 }
 <div class="container body-content">
-    <h2>Edit</h2>
+    <h2>Edit Link</h2>
 
 
     @using (Html.BeginForm())
@@ -12,22 +12,26 @@
         @Html.AntiForgeryToken()
 
         <div class="form-horizontal">
-            <h4>Link</h4>
             <hr />
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             @ViewBag.ErrorMessage
-
             <div class="form-group">
                 @Html.LabelFor(model => model.Label, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Label, new { htmlAttributes = new { @class = "form-control" } })
+                <div class="col-md-3">
+                    @Html.EditorFor(model => model.Label, new { htmlAttributes = new { @class = "form-control", id = "linkName" } })
                     @Html.ValidationMessageFor(model => model.Label, "", new { @class = "text-danger" })
                 </div>
+                <span class="input-group-btn col-md-2">
+                    <button id="clickMe" class="btn btn-default linkybtn" onclick="genRand();"><i class="fas fa-dice"></i></button>
+                </span>
+                <span class="input-group-btn col-md-5">
+
+                </span>
             </div>
 
             <div class="form-group">
                 @Html.LabelFor(model => model.URL, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
+                <div class="col-md-3">
                     @Html.EditorFor(model => model.URL, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.URL, "", new { @class = "text-danger" })
                 </div>
@@ -35,17 +39,26 @@
 
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Save" class="btn btn-default" />
+                    <input type="submit" value="Create" class="btn btn-default linkybtn" />
                 </div>
             </div>
         </div>
     }
 
     <div>
-        @Html.ActionLink("Back to List", "Index")
+        @Html.ActionLink("Back to List", "Index",null, htmlAttributes: new { @class = "btn btn-danger"})
     </div>
 
     @section Scripts {
         @Scripts.Render("~/bundles/jqueryval")
+        <script>
+            function genRand() {
+                var tmp = "";
+                var availChars = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM1234567890";
+                for (var i = 0; i < 6; i++)
+                    tmp += availChars.charAt(Math.floor(Math.random() * availChars.length));
+                document.getElementById("linkName").value = tmp;
+            }
+        </script>
     }
-<div/>
+    <div />
