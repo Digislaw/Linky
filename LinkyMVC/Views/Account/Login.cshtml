@@ -1,7 +1,7 @@
 ﻿@using LinkyMVC.Models
 @model LoginViewModel
 @{
-    ViewBag.Title = "Zaloguj";
+    ViewBag.Title = "Login using local account";
 }
 
 
@@ -15,7 +15,6 @@
                 @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                 {
                     @Html.AntiForgeryToken()
-                    <h4>Zaloguj się za pomocą konta lokalnego.</h4>
                     <hr />
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     <div class="form-group">
@@ -42,16 +41,20 @@
                     </div>
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-10">
-                            <input type="submit" value="Zaloguj" class="btn btn-default" />
+                            <input type="submit" value="Zaloguj" class="btn btn-default linkybtn" />
                         </div>
                     </div>
-                    <p>
-                        @Html.ActionLink("Zarejestruj się jako nowy użytkownik", "Register")
-                    </p>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <a href="@Url.Action("Register")" class="btn btn-default linkybtn">Register</a>
+
+                        </div>
+                    </div>
+
                     @* Włącz ten element po włączeniu potwierdzenia konta dla funkcji resetowania hasła
-                        <p>
-                            @Html.ActionLink("Nie pamiętasz hasła?", "ForgotPassword")
-                        </p>*@
+            <p>
+                @Html.ActionLink("Nie pamiętasz hasła?", "ForgotPassword")
+            </p>*@
                 }
             </section>
         </div>
