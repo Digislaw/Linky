@@ -10,7 +10,15 @@
 </div>
 <div class="elipse">
     <div class="centerbutton">
-        @Html.ActionLink("Start Now!", "Login", "Account", routeValues: null, htmlAttributes: new { @class = "btn btn-default linkybtn btn-size", id = "loginLink", })
+        @if (Request.IsAuthenticated)
+        {
+            @Html.ActionLink("Start Now!", "Index", "Links")
+        }
+        else
+        {
+            @Html.ActionLink("Start Now!", "Login", "Account", routeValues: null, htmlAttributes: new { @class = "btn btn-default linkybtn btn-size", id = "loginLink", })
+        }
+
     </div>
 </div>
 
