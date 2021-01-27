@@ -27,6 +27,7 @@ namespace LinkyMVC
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css",
+                      "~/Content/contact.css",
                       "~/Content/details.css"));
         }
     }

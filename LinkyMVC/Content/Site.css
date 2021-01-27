@@ -94,6 +94,10 @@ footer {
     color:  #681879;
 }
 
+a.linkycolor:hover {
+    color:  #a25ab3;
+}
+
 .linkybtn {
     background-color:#681879;
     color:white;

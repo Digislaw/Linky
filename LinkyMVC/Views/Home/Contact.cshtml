@@ -1,17 +1,37 @@
 ﻿@{
-    ViewBag.Title = "Contact";
+    ViewBag.Title = "Contact us";
 }
-<h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
 
-<address>
-    One Microsoft Way<br />
-    Redmond, WA 98052-6399<br />
-    <abbr title="Phone">P:</abbr>
-    425.555.0100
-</address>
+<div class="container body-content">
+    <h1 class="text-center header">@ViewBag.Title</h1>
+    
+    <div id="authors" class="row text-center">
+        <div class="col-lg-4 col-lg-offset-2">
+            <i class="fas fa-user-tie fa-10x linkycolor"></i>
+            <h2>Maciej Koniecko</h2>
 
-<address>
-    <strong>Support:</strong>   <a href="mailto:Support@example.com">Support@example.com</a><br />
-    <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
-</address>
+            <h4 class="contact-row">
+                <i class="fas fa-envelope"></i>
+                <a href="mailto:296762@stud.umk.pl" class="linkycolor">296762@stud.umk.pl</a>
+            </h4>            
+            <h4 class="contact-row">
+                <i class="fas fa-phone-alt"></i>
+                <a href="tel:+48123456789" class="linkycolor">+48 123 456 789</a>
+            </h4>
+        </div>
+
+        <div class="col-lg-4">
+            <i class="fas fa-user-tie fa-10x linkycolor"></i>
+            <h2>Igor Pawlikowski</h2>
+
+            <h4 class="contact-row">
+                <i class="fas fa-envelope"></i>
+                <a href="mailto:286306@stud.umk.pl" class="linkycolor">286306@stud.umk.pl</a>
+            </h4>
+            <h4 class="contact-row">
+                <i class="fas fa-phone-alt"></i>
+                <a href="tel:+48987654321" class="linkycolor">+48 987 654 321</a>
+            </h4>
+        </div>
+    </div>
+</div>
