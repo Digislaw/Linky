@@ -62,11 +62,10 @@ namespace LinkyMVC
             container.RegisterType<DbContext, AppDbContext>(new HierarchicalLifetimeManager());
 
             // Identity
-            container.RegisterType<IUserStore<ApplicationUser>, UserStore<ApplicationUser>>(new HierarchicalLifetimeManager());
-            container.RegisterType<UserManager<ApplicationUser>>(new HierarchicalLifetimeManager());
+            container.RegisterType<IUserStore<ApplicationUser>, UserStore<ApplicationUser>>();
+            container.RegisterType<UserManager<ApplicationUser>>();
             container.RegisterType<IAuthenticationManager>(new InjectionFactory(x => HttpContext.Current.GetOwinContext().Authentication));
             container.RegisterType<AccountController>(new InjectionConstructor());
-            //container.RegisterType<ApplicationUserManager>(new PerRequestLifetimeManager());
 
             // Automapper
             var autoMapperConfig = new MapperConfiguration(x => x.AddProfile<AutoMapperBaseConfig>());

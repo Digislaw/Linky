@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -55,10 +54,10 @@ namespace LinkyMVC.Controllers
         public async Task<ActionResult> Index(ManageMessageId? message)
         {
             ViewBag.StatusMessage =
-                message == ManageMessageId.ChangePasswordSuccess ? "Zmieniono hasło."
-                : message == ManageMessageId.SetPasswordSuccess ? "Ustawiono hasło."
+                message == ManageMessageId.ChangePasswordSuccess ? "Password changed."
+                : message == ManageMessageId.SetPasswordSuccess ? "Password set."
                 : message == ManageMessageId.SetTwoFactorSuccess ? "Ustawiono dostawcę uwierzytelniania dwuetapowego."
-                : message == ManageMessageId.Error ? "Wystąpił błąd."
+                : message == ManageMessageId.Error ? "Unexpected error occured."
                 : message == ManageMessageId.AddPhoneSuccess ? "Dodano numer telefonu."
                 : message == ManageMessageId.RemovePhoneSuccess ? "Usunięto numer telefonu."
                 : "";
@@ -66,6 +65,7 @@ namespace LinkyMVC.Controllers
             var userId = User.Identity.GetUserId();
             var model = new IndexViewModel
             {
+                Email = User.Identity.GetUserName(),
                 HasPassword = HasPassword(),
                 PhoneNumber = await UserManager.GetPhoneNumberAsync(userId),
                 TwoFactor = await UserManager.GetTwoFactorEnabledAsync(userId),
