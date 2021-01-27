@@ -6,7 +6,7 @@ namespace LinkyMVC.Models
     public class ExternalLoginConfirmationViewModel
     {
         [Required]
-        [Display(Name = "Adres e-mail")]
+        [Display(Name = "E-mail")]
         public string Email { get; set; }
     }
 
@@ -33,7 +33,7 @@ namespace LinkyMVC.Models
         public string Code { get; set; }
         public string ReturnUrl { get; set; }
 
-        [Display(Name = "Did you remember this broswer?")]
+        [Display(Name = "Did you remember this browser?")]
         public bool RememberBrowser { get; set; }
 
         public bool RememberMe { get; set; }
