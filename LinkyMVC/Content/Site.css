@@ -121,3 +121,8 @@ a.linkycolor:hover {
     height: 150px;
     text-indent: -9999px; /* hides the link text */
 }
+
+.table {
+    font-size: 16px;
+    margin-top: 16px;
+}

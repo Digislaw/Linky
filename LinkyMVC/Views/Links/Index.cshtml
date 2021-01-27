@@ -11,16 +11,16 @@
         <thead>
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.Label)
+                    Shortened link
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.URL)
+                    Destination
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Clicks)
+                    Clicks
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.CreatedAt)
+                    Created at
                 </th>
                 <th></th>
             </tr>
@@ -29,10 +29,10 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Label)
+                    <a href="/@item.Label">@Url.Action("Index", "Home", null, "https")@item.Label</a>
                 </td>
                 <td>
-                    @Html.DisplayFor(modelIem => item.URL)
+                    <a href="@item.URL">@Html.DisplayFor(modelIem => item.URL)</a>
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Clicks)
