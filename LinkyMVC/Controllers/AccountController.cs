@@ -84,7 +84,7 @@ namespace LinkyMVC.Controllers
                     return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
                 case SignInStatus.Failure:
                 default:
-                    ModelState.AddModelError("", "Nieprawidłowa próba logowania.");
+                    ModelState.AddModelError("", "Invalid login attempt.");
                     return View(model);
             }
         }
@@ -127,7 +127,7 @@ namespace LinkyMVC.Controllers
                     return View("Lockout");
                 case SignInStatus.Failure:
                 default:
-                    ModelState.AddModelError("", "Nieprawidłowy kod.");
+                    ModelState.AddModelError("", "Wrong code.");
                     return View(model);
             }
         }
