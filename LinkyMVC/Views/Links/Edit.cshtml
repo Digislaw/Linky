@@ -13,8 +13,15 @@
 
         <div class="form-horizontal">
             <hr />
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            @ViewBag.ErrorMessage
+            <div class="form-group">
+                @if (ViewBag.ErrorMessage == "A link with the specified label already exists")
+                {
+                    <div class="col-md-2"></div>
+                    <div class="col-md-4">
+                        <span class="alert alert-danger">@ViewBag.ErrorMessage</span>
+                    </div>
+                }
+            </div>
             <div class="form-group">
                 @Html.LabelFor(model => model.Label, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-3">
